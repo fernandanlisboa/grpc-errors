@@ -8,12 +8,15 @@ def run():
     channel = grpc.insecure_channel('localhost:50051')
     stub = hello_pb2_grpc.HelloServiceStub(channel)
     # ideally, you should have try catch block here too
-    response = stub.SayHello(hello_pb2.HelloReq(Name='Euler'))
-    print(response.Result)
+    name = str(input("Digite seu nome: "))
+    # response = stub.SayHello(hello_pb2.HelloReq(Name=name))
+    # print(response.Result)
+    age = int(input("Digite sua idade: "))
 
     try:
         response = stub.SayHelloStrict(hello_pb2.HelloReq(
-            Name='Leonhard Euler'))
+            Name=name))
+        response = stub.AgeHello(hello_pb2.HelloAge(Age=age))
     except grpc.RpcError as e:
         # ouch!
         # lets print the gRPC error message
@@ -29,6 +32,8 @@ def run():
         # want to do some specific action based on the error?
         if grpc.StatusCode.INVALID_ARGUMENT == status_code:
             # do your stuff here
+            pass
+        if grpc.StatusCode.OUT_OF_RANGE == status_code:
             pass
     else:
         print(response.Result)
