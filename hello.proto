@@ -11,12 +11,19 @@ service HelloService {
     // Strict Version responds only to requests which have `Name` length
     // less than 10 characters
     rpc SayHelloStrict(HelloReq) returns (HelloResp) {};
+    //It says wich phase the person is by their age
+    rpc AgeHello(HelloAge) returns (HelloResp) {};
 }
 
 message HelloReq {
     string Name = 1;
 }
 
+message HelloAge {
+    int32 Age = 1;
+}
+
 message HelloResp {
     string Result = 1;
 }
+
